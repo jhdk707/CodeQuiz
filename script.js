@@ -90,8 +90,23 @@ next_btn.onclick = ()=> {
 function showQuestions(index) {
     const que_text = document.querySelector(".que_text");
 
-    //Make new window
-}   
+    //Make new window          
+    let que_tag = '<span>'+ questions[index].numb + ". " + questions[index].question +'</span>';
+    let option_tag = '<div class="option"><span>'+ questions[index].options[0] +'</span></div>'
+    + '<div class="option"><span>'+ questions[index].options[1] +'</span></div>'
+    + '<div class="option"><span>'+ questions[index].options[2] +'</span></div>'
+    + '<div class="option"><span>'+ questions[index].options[3] +'</span></div>';
+    que_text.innerHTML = que_tag; 
+    option_list.innerHTML = option_tag; 
+
+    const option = ans_opts.querySelectorAll(".option");
+    // set onclick attribute to all available options
+    for(i=0; i < option.length; i++){
+    option[i].setAttribute("onclick", "optionSelected(this)");
+    }
+}
+
+
 
 // Questions Array 
 let questions = [
@@ -163,3 +178,23 @@ let questions = [
     ]
   },
 ];
+
+
+
+
+
+
+
+
+  // question template
+  //   {
+  //   numb: X,
+  //   question: "Blank",
+  //   answer: "Correct answer",
+  //   options: [
+  //     "Option 1",
+  //     "option 2",
+  //     "option 3",
+  //     "option 4"
+  //   ]
+  // },
