@@ -75,14 +75,14 @@ body{
     font-size: 20px;
     font-weight: 600;
 }
-.rules_box .info-list{
+.rules_box .rules_list{
     padding: 15px 30px;
 }
-.rules_box .info-list .info{
+.rules_box .rules_list .info{
     margin: 5px 0;
     font-size: 17px;
 }
-.rules_box .info-list .info span{
+.rules_box .rules_list .info span{
     font-weight: 600;
     color: #007bff;
 }
