@@ -12,6 +12,15 @@ const next_btn = document.querySelector(".quiz_box footer .next");
 const bottom_ques_counter = document.querySelector(".quiz_box footer .bottom_ques_counter");
 const restart_btn = document.getElementById('restart-button');
 var quit_quiz = result_box.querySelector(".buttons .quit");
+let timeValue = 60;
+let que_count = 0;
+let que_numb = 1;
+let userScore = 0;
+let counter;
+let counterLine;
+let widthValue = 0;
+let intervalId;
+
 
 
 // Questions Array 
@@ -102,17 +111,48 @@ continue_btn.onclick = ()=> {
     quiz_box.classList.add("activeQuiz");
     showQuestions(0);
     queCounter(1);
-    startTimer(60);
+    startTimer(timeValue);
     startTimerLine(0);
 }
 
-let timeValue = 60;
-let que_count = 0;
-let que_numb = 1;
-let userScore = 0;
-let counter;
-let counterLine;
-let widthValue = 0;
+
+function startTimer(timeValue){
+  counter = setInterval(timer, 1000);
+  function timer(){
+      timeCount.textContent = timeValue; //changing the value of timeCount with time value
+      timeValue--; //decrement the time value
+      if(timeValue < 9){ //if timer is less than 9
+          let addZero = timeCount.textContent; 
+          timeCount.textContent = "0" + addZero; //add a 0 before time value
+      }
+      if(timeValue < 0){ //if timer is less than 0
+          clearInterval(counter); //clear counter
+          timeText.textContent = "Time Off"; //change the time text to time off
+          const allOptions = ans_opts.children.length; //getting all option items
+          let correcAns = questions[que_count].answer; //getting correct answer from array
+          for(i=0; i < allOptions; i++){
+              if(ans_opts.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
+                  ans_opts.children[i].setAttribute("class", "option correct"); //adding green color to matched option
+                  console.log("Time Off: Auto selected correct answer.");
+              }
+          }
+          for(i=0; i < allOptions; i++){
+              ans_opts.children[i].classList.add("disabled"); //once user select an option then disabled all options
+          }
+          next_btn.classList.add("show"); //show the next button if user selected any option
+      }
+  }
+}
+function startTimerLine(time){
+  counterLine = setInterval(timer, 29);
+  function timer(){
+      time += 1; //upgrading time value with 1
+      time_line.style.width = time + "px"; //increasing width of time_line with px by time value
+      if(time > 549){ //if time value is greater than 549
+          clearInterval(counterLine); //clear counterLine
+      }
+  }
+}
 
 // When Restart is clicked 
 restart_btn.onclick = ()=>{
@@ -152,10 +192,6 @@ next_btn.addEventListener('click', () => {
           que_numb++;
           showQuestions(que_count);
           queCounter(que_numb);
-          clearInterval (counter);
-          clearInterval (counterLine);
-          startTimer(timeValue)
-          startTimerLine(widthValue);
           timeText.textContent = "Time Left";
           next_btn.classList.remove("show");
       }
@@ -185,33 +221,36 @@ function showQuestions(index) {
 
 // insert functions here
 //if user clicked on option
-function optionSelected(answer){
-  clearInterval(counter); //clear counter
-  clearInterval(counterLine); //clear counterLine
+function optionSelected(answer) {
   let userAns = answer.textContent; //getting user selected option
   let correcAns = questions[que_count].answer; //getting correct answer from array
   const allOptions = ans_opts.children.length; //getting all option items
-  
-  if(userAns == correcAns){ //if user selected option is equal to array's correct answer
-      userScore += 1; //upgrading score value with 1
-      answer.classList.add("correct"); //adding green color to correct selected option
-     // answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
-      console.log("Correct Answer");
-      console.log("Your correct answers = " + userScore);
-  }else{
-      answer.classList.add("incorrect"); //adding red color to correct selected option
-     // answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
-      console.log("Wrong Answer");
-      for(i=0; i < allOptions; i++){
-          if(ans_opts.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer 
-              ans_opts.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-             // ans_opts.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
-              console.log("Auto selected correct answer.");
-          }
+
+  if (userAns === correcAns) { //if user selected option is equal to array's correct answer
+    userScore += 1; //upgrading score value with 1
+    answer.classList.add("correct"); //adding green color to correct selected option
+    console.log("Correct Answer");
+    console.log("Your correct answers = " + userScore);
+  } else {
+    answer.classList.add("incorrect"); //adding red color to correct selected option
+    console.log("Wrong Answer");
+
+    for (let i = 0; i < allOptions; i++) {
+      if (ans_opts.children[i].textContent === correcAns) {
+        ans_opts.children[i].classList.add("correct");
       }
+    }
+
+    // Decrement the timer by 10 seconds
+    let newTime = parseInt(timeCount.textContent) - 10;
+    if (newTime < 0) {
+      newTime = 0;
+    }
+    timeCount.textContent = newTime;
   }
-  for(i=0; i < allOptions; i++){
-      ans_opts.children[i].classList.add("disabled"); //once user select an option then disabled all options
+
+  for (let i = 0; i < allOptions; i++) {
+    ans_opts.children[i].classList.add("disabled"); //once user select an option then disabled all options
   }
   next_btn.classList.add("show"); //show the next button if user selected any option
 }
@@ -227,43 +266,6 @@ if(que_count == questions.length) {
 }};
 
 
-function startTimer(time){
-  counter = setInterval(timer, 1000);
-  function timer(){
-      timeCount.textContent = time; //changing the value of timeCount with time value
-      time--; //decrement the time value
-      if(time < 9){ //if timer is less than 9
-          let addZero = timeCount.textContent; 
-          timeCount.textContent = "0" + addZero; //add a 0 before time value
-      }
-      if(time < 0){ //if timer is less than 0
-          clearInterval(counter); //clear counter
-          timeText.textContent = "Time Off"; //change the time text to time off
-          const allOptions = ans_opts.children.length; //getting all option items
-          let correcAns = questions[que_count].answer; //getting correct answer from array
-          for(i=0; i < allOptions; i++){
-              if(ans_opts.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
-                  ans_opts.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-                  console.log("Time Off: Auto selected correct answer.");
-              }
-          }
-          for(i=0; i < allOptions; i++){
-              option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
-          }
-          next_btn.classList.add("show"); //show the next button if user selected any option
-      }
-  }
-}
-function startTimerLine(time){
-  counterLine = setInterval(timer, 29);
-  function timer(){
-      time += 1; //upgrading time value with 1
-      time_line.style.width = time + "px"; //increasing width of time_line with px by time value
-      if(time > 549){ //if time value is greater than 549
-          clearInterval(counterLine); //clear counterLine
-      }
-  }
-}
 function queCounter(index){
   //creating a new span tag and passing the question number and total question
   let totalQueCounTag = '<span><p>'+ index +'</p> of <p>'+ questions.length +'</p> Questions</span>';
@@ -272,17 +274,6 @@ function queCounter(index){
 
 
 //
-
-
-
-
-
-
-
-
-
-
-
   // question template
   //   {
   //   numb: X,
