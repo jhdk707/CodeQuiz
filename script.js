@@ -13,6 +13,7 @@ const bottom_ques_counter = document.querySelector(".quiz_box footer .bottom_que
 const restart_btn = document.getElementById('restart-button');
 var quit_quiz = result_box.querySelector(".buttons .quit");
 
+
 // Questions Array 
 let questions = [
   {
@@ -140,24 +141,24 @@ quit_quiz.onclick = ()=> {
 
 //Click Next Button 
 next_btn.addEventListener('click', () => {
-  console.log('Next button was clicked');
-
-    if (que_count < questions.length - 1){
-        que_count++;
-        que_numb++;
-        showQuestions(que_count);
-        queCounter(que_numb);
-        clearInterval (counter);
-        clearInterval (counterLine);
-        startTimer(timeValue)
-        startTimerLine(widthValue);
-        timeText.textContent = "Time Left";
-        next_btn.classList.remove("show");
-    }else{
-        clearInterval(counter);
-        clearInterval(counterLine);
-        showResult ();
-    }
+    console.log('Next button was clicked');
+  
+      if (que_count === questions.length - 1){
+          clearInterval(counter);
+          clearInterval(counterLine);
+          showResults ();
+      } else {
+          que_count++;
+          que_numb++;
+          showQuestions(que_count);
+          queCounter(que_numb);
+          clearInterval (counter);
+          clearInterval (counterLine);
+          startTimer(timeValue)
+          startTimerLine(widthValue);
+          timeText.textContent = "Time Left";
+          next_btn.classList.remove("show");
+      }
   });
 
 //Display Questions Options from Array
@@ -214,12 +215,18 @@ function optionSelected(answer){
   }
   next_btn.classList.add("show"); //show the next button if user selected any option
 }
-if(que_count === 6) {
-  result_box.classList.add("activeQuiz");
+
+function showResults(){
+if(que_count == questions.length) {
   quiz_box.classList.remove("activeQuiz");
+  result_box.classList.add("activeResults");
   showResults();
   clearInterval(counter);
-}
+} else {
+    que_count++;
+}};
+
+
 function startTimer(time){
   counter = setInterval(timer, 1000);
   function timer(){
@@ -232,12 +239,11 @@ function startTimer(time){
       if(time < 0){ //if timer is less than 0
           clearInterval(counter); //clear counter
           timeText.textContent = "Time Off"; //change the time text to time off
-          const allOptions = option_list.children.length; //getting all option items
+          const allOptions = ans_opts.children.length; //getting all option items
           let correcAns = questions[que_count].answer; //getting correct answer from array
           for(i=0; i < allOptions; i++){
-              if(option_list.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
-                  option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-                  option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+              if(ans_opts.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
+                  ans_opts.children[i].setAttribute("class", "option correct"); //adding green color to matched option
                   console.log("Time Off: Auto selected correct answer.");
               }
           }

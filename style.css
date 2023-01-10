@@ -355,3 +355,10 @@ footer button.show{
     color: #ff0000;
     background: #181D27;
 }
+
+@media only screen and (max-width: 798px) {
+    .quiz_box {
+        width: 90%;
+        margin: 0 auto;
+    }
+}
