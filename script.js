@@ -3,15 +3,15 @@ const rules_box = document.querySelector(".rules_box");
 const exit_btn = document.querySelector(".rules_box + .buttons .exit");
 const continue_btn = document.getElementById('continue-button');
 const quiz_box = document.querySelector(".quiz_box");
-const end_box = document.querySelector(".end_box");
+const result_box = document.querySelector(".end_box");
 const ans_opts = document.querySelector(".ans_opts");
 const time_line = document.querySelector("header .time_line");
 const timeText = document.querySelector(".timer .time_left_txt");
 const timeCount = document.querySelector(".timer .timer_sec");
 const next_btn = document.querySelector(".quiz_box footer .next");
-const bottom_ques_counter = document.querySelector(".quiz_box footer .total_que");
+const bottom_ques_counter = document.querySelector(".quiz_box footer .bottom_ques_counter");
 const restart_btn = document.getElementById('restart-button');
-var quit_quiz = end_box.querySelector(".buttons .quit");
+var quit_quiz = result_box.querySelector(".buttons .quit");
 
 // Questions Array 
 let questions = [
@@ -62,7 +62,7 @@ let questions = [
   {
   numb: 5,
   question: "What is a BooLean?",
-  answer: "True or False",
+  answer: "True or False Statement",
   options: [
     "True or False Statement",
     "Switch Statement",
@@ -194,44 +194,31 @@ function optionSelected(answer){
   if(userAns == correcAns){ //if user selected option is equal to array's correct answer
       userScore += 1; //upgrading score value with 1
       answer.classList.add("correct"); //adding green color to correct selected option
-      answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
+     // answer.insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to correct selected option
       console.log("Correct Answer");
       console.log("Your correct answers = " + userScore);
   }else{
       answer.classList.add("incorrect"); //adding red color to correct selected option
-      answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
+     // answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
       console.log("Wrong Answer");
       for(i=0; i < allOptions; i++){
           if(ans_opts.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer 
               ans_opts.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-              ans_opts.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
+             // ans_opts.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
               console.log("Auto selected correct answer.");
           }
       }
   }
   for(i=0; i < allOptions; i++){
-      option_list.children[i].classList.add("disabled"); //once user select an option then disabled all options
+      ans_opts.children[i].classList.add("disabled"); //once user select an option then disabled all options
   }
   next_btn.classList.add("show"); //show the next button if user selected any option
 }
-function showResult(){
-  rules_box.classList.remove("activeInfo"); //hide info box
-  quiz_box.classList.remove("activeQuiz"); //hide quiz box
-  result_box.classList.add("activeResult"); //show result box
-  const scoreText = result_box.querySelector(".score_text");
-  if (userScore > 3){ // if user scored more than 3
-      //creating a new span tag and passing the user score number and total question number
-      let scoreTag = '<span>and congrats! , You got <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
-      scoreText.innerHTML = scoreTag;  //adding new span tag inside score_Text
-  }
-  else if(userScore > 1){ // if user scored more than 1
-      let scoreTag = '<span>and nice , You got <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
-      scoreText.innerHTML = scoreTag;
-  }
-  else{ // if user scored less than 1
-      let scoreTag = '<span>and sorry , You got only <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
-      scoreText.innerHTML = scoreTag;
-  }
+if(que_count === 6) {
+  result_box.classList.add("activeQuiz");
+  quiz_box.classList.remove("activeQuiz");
+  showResults();
+  clearInterval(counter);
 }
 function startTimer(time){
   counter = setInterval(timer, 1000);

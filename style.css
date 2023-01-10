@@ -244,15 +244,15 @@ footer{
     justify-content: space-between;
     border-top: 1px solid lightgrey;
 }
-footer .scr_count span{
+footer .bottom_ques_counter span{
     display: flex;
     user-select: none;
 }
-footer .scr_count span p{
+footer .bottom_ques_counter span p{
     font-weight: 500;
     padding: 0 5px;
 }
-footer .scr_count span p:first-child{
+footer .bottom_ques_counter span p:first-child{
     padding-left: 0px;
 }
 footer button{
