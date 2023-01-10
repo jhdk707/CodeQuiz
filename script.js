@@ -1,7 +1,7 @@
 const start_btn = document.querySelector(".start_btn button");
 const rules_box = document.querySelector(".rules_box");
-const exit_btn = document.querySelector(".rules_box + .buttons .exit");
-const continue_btn = document.getElementById('continue-button');
+const exit_btn = document.querySelector(".rules_box .buttons .exit");
+const continue_btn = document.querySelector(".rules_box .buttons #continue-button");
 const quiz_box = document.querySelector(".quiz_box");
 const result_box = document.querySelector(".end_box");
 const ans_opts = document.querySelector(".ans_opts");
@@ -107,15 +107,15 @@ exit_btn.onclick = ()=> {
 
 // Click Continue Quiz Button
 continue_btn.onclick = ()=> {
-    rules_box.classList.remove("activeInfo");
-    quiz_box.classList.add("activeQuiz");
-    showQuestions(0);
-    queCounter(1);
-    startTimer(timeValue);
-    startTimerLine(0);
+  rules_box.classList.remove("activeInfo");
+  quiz_box.classList.add("activeQuiz");
+  showQuestions(0);
+  queCounter(1);
+  startTimer(timeValue);
+  startTimerLine(0);
 }
 
-
+// Timer Function
 function startTimer(timeValue){
   counter = setInterval(timer, 1000);
   function timer(){
@@ -125,30 +125,25 @@ function startTimer(timeValue){
           let addZero = timeCount.textContent; 
           timeCount.textContent = "0" + addZero; //add a 0 before time value
       }
-      if(timeValue < 0){ //if timer is less than 0
-          clearInterval(counter); //clear counter
-          timeText.textContent = "Time Off"; //change the time text to time off
-          const allOptions = ans_opts.children.length; //getting all option items
-          let correcAns = questions[que_count].answer; //getting correct answer from array
-          for(i=0; i < allOptions; i++){
-              if(ans_opts.children[i].textContent == correcAns){ //if there is an option which is matched to an array answer
-                  ans_opts.children[i].setAttribute("class", "option correct"); //adding green color to matched option
-                  console.log("Time Off: Auto selected correct answer.");
-              }
-          }
+      if (timeValue <= 0) {
+        clearInterval(counter);
+        timeCount.textContent = "0";
+        // logic for game over
+      }
           for(i=0; i < allOptions; i++){
               ans_opts.children[i].classList.add("disabled"); //once user select an option then disabled all options
           }
           next_btn.classList.add("show"); //show the next button if user selected any option
       }
   }
-}
-function startTimerLine(time){
+
+
+function startTimerLine(timeValue){
   counterLine = setInterval(timer, 29);
   function timer(){
-      time += 1; //upgrading time value with 1
-      time_line.style.width = time + "px"; //increasing width of time_line with px by time value
-      if(time > 549){ //if time value is greater than 549
+      timeValue += 1; //upgrading time value with 1
+      time_line.style.width = timeValue + "px"; //increasing width of time_line with px by time value
+      if(timeValue > 549){ //if time value is greater than 549
           clearInterval(counterLine); //clear counterLine
       }
   }
