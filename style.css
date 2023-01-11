@@ -110,16 +110,6 @@ footer .buttons{
 }
 
 .rules_box footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-}
-
-.footer {
     position: relative;
     bottom: 0;
     width: 100%;
@@ -129,6 +119,15 @@ footer .buttons{
     padding: 30px;
 }
 
+ .footer {
+/*    position: relative;
+    bottom: 0;
+    width: 100%;
+  */  display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+} 
 
 .quiz_box{
     width: 550px;
@@ -278,24 +277,21 @@ footer .bottom_ques_counter span p{
 footer .bottom_ques_counter span p:first-child{
     padding-left: 0px;
 }
-footer button{
+
+.rules_box .rules_footer .buttons {
+    margin: 0 10px;
     height: 40px;
-    padding: 0 13px;
-    font-size: 18px;
-    font-weight: 400;
+    width: 100px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
     border: none;
     outline: none;
-    color: #fff;
     border-radius: 5px;
-    background: #007bff;
-    border: 1px solid #007bff;
-    line-height: 10px;
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.95);
+    border: 1px solid #fff;
     transition: all 0.3s ease;
-}
+}`
+
 footer button:hover{
     background: #69B578;
 }

@@ -20,6 +20,7 @@ let counter;
 let counterLine;
 let widthValue = 0;
 let intervalId;
+let allOptions = document.querySelectorAll('.ans_opts div');
 
 
 
@@ -187,7 +188,8 @@ next_btn.addEventListener('click', () => {
           next_btn.classList.remove("show");
       }
   });
-
+  
+  let question = questions[index].question;
 //Display Questions Options from Array
 function showQuestions(index) {
     const que_text = document.querySelector(".que_text");
