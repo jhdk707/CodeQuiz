@@ -119,14 +119,14 @@ footer .buttons{
     padding: 10px;
 }
 
-.footer-container {
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    padding: 10px;
+    padding: 30px;
 }
 
 
