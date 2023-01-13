@@ -6,20 +6,20 @@ const quiz_box = document.querySelector(".quiz_box");
 const result_box = document.querySelector(".end_box");
 const ans_opts = document.querySelector(".ans_opts");
 const time_line = document.querySelector("header .time_line");
-const timeText = document.querySelector(".timer .time_left_txt");
-const timeCount = document.querySelector(".timer .timer_sec");
+const timeText = document.querySelector(".timer .timer_sec");
+// const timeCount = document.querySelector(".timer .timer_sec");
 const next_btn = document.querySelector(".quiz_box footer .next");
 const bottom_ques_counter = document.querySelector(".quiz_box footer .bottom_ques_counter");
 const restart_btn = document.querySelector(".restart");
 var quit_quiz = result_box.querySelector(".buttons .quit");
 let timeValue = 60;
+let intervalId;
 let que_count = 0;
 let que_numb = 1;
 let userScore = 0;
 let counter;
 let counterLine;
 let widthValue = 0;
-let intervalId;
 let allOptions = document.querySelectorAll('.ans_opts div');
 
 
@@ -113,34 +113,25 @@ continue_btn.onclick = ()=> {
   showQuestions(0);
   queCounter(1);
   startTimer(timeValue);
-  startTimerLine(0);
+//  startTimerLine(0);
 }
 
 // Timer Function
-function startTimer(timeValue){
-  counter = setInterval(timer, 1000);
-  function timer(){
-      timeCount.textContent = timeValue; //changing the value of timeCount with time value
-      timeValue--; //decrement the time value
-      if(timeValue < 9){ //if timer is less than 9
-          let addZero = timeCount.textContent; 
-          timeCount.textContent = "0" + addZero; //add a 0 before time value
-      }
-      if (timeValue <= 0) {
-        clearInterval(counter);
-        timeCount.textContent = "0";
-        // logic for game over
-      }
-          for(i=0; i < allOptions; i++){
-              ans_opts.children[i].classList.add("disabled"); //once user select an option then disabled all options
-          }
-          next_btn.classList.add("show"); //show the next button if user selected any option
-      }
-  }
-
+const startTimer = (timeValue) => {
+  timeText.innerHTML =timeValue;
+  intervalId = setInterval (() =>{
+    if (timeValue <= 0) {
+      clearInterval(intervalId);
+      endQuiz();
+    } else {
+      timeValue--;
+      timeText.innerHTML = timeValue;
+    }
+  }, 1000);
+};
 
 function startTimerLine(timeValue){
-  counterLine = setInterval(timer, 29);
+  counterLine = setInterval(timer, 60);
   function timer(){
       timeValue += 1; //upgrading time value with 1
       time_line.style.width = timeValue + "px"; //increasing width of time_line with px by time value
@@ -149,6 +140,17 @@ function startTimerLine(timeValue){
       }
   }
 }
+
+const removeTime = () => {
+  timeValue -=10;
+  timeText.innerHTML = timeValue;
+}
+
+const endQuiz = () => {
+  clearInterval(intervalId)
+  // TODO: End Quiz logic here 
+}
+
 
 // When Restart is clicked 
 restart_btn.onclick = ()=>{
@@ -188,7 +190,7 @@ next_btn.addEventListener('click', () => {
           next_btn.classList.remove("show");
       }
   });
-  
+
   let question = questions[index].question;
 //Display Questions Options from Array
 function showQuestions(index) {
@@ -228,18 +230,20 @@ function optionSelected(answer) {
     answer.classList.add("incorrect"); //adding red color to correct selected option
     console.log("Wrong Answer");
 
+     // Decrement the timer by 10 seconds
+     let newTime = parseInt(timeText.textContent) - 10;
+     if (newTime < 0) {
+       newTime = 0;
+     }
+     timeText.textContent = newTime;
+
     for (let i = 0; i < allOptions; i++) {
       if (ans_opts.children[i].textContent === correcAns) {
         ans_opts.children[i].classList.add("correct");
       }
     }
 
-    // Decrement the timer by 10 seconds
-    let newTime = parseInt(timeCount.textContent) - 10;
-    if (newTime < 0) {
-      newTime = 0;
-    }
-    timeCount.textContent = newTime;
+   
   }
 
   for (let i = 0; i < allOptions; i++) {
@@ -257,7 +261,6 @@ if(que_count == questions.length) {
 } else {
     que_count++;
 }};
-
 
 function queCounter(index){
   //creating a new span tag and passing the question number and total question

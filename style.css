@@ -12,7 +12,7 @@ Color Palette Used As follows
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: monospace;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
 
 
@@ -26,7 +26,7 @@ body{
 .start_btn,
 .rules_box,
 .quiz_box,
-.result_box{
+.end_box{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -37,7 +37,7 @@ body{
 
 .rules_box.activeInfo,
 .quiz_box.activeQuiz,
-.result_box.activeResult{
+.end_box.activeResult{
     opacity: 1;
     z-index: 5;
     pointer-events: auto;
@@ -64,7 +64,7 @@ body{
     pointer-events: none;
     transition: all 0.3s ease;
 }
-.rules_box .info-title{
+.rules_box .rules-title{
     height: 60px;
     width: 100%;
     border-bottom: 1px solid lightgrey;
@@ -77,15 +77,9 @@ body{
 }
 .rules_box .rules_list{
     padding: 15px 30px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
-.rules_box .rules_list .info{
-    margin: 5px 0;
-    font-size: 17px;
-}
-.rules_box .rules_list .info span{
-    font-weight: 600;
-    color: #007bff;
-}
+
 footer .buttons{
     height: 60px;
     display: flex;
@@ -95,7 +89,7 @@ footer .buttons{
     border-top: 1px solid white;
 }
 
-.rules_box .buttons{
+.quiz_box .buttons{
     margin: 0 10px;
     height: 40px;
     width: 100px;
@@ -109,7 +103,7 @@ footer .buttons{
     transition: all 0.3s ease;
 }
 
-.rules_box footer {
+.rules_box .footer {
     position: relative;
     bottom: 0;
     width: 100%;
@@ -137,6 +131,7 @@ footer .buttons{
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s ease;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
 .quiz_box header{
     position: relative;
@@ -149,6 +144,7 @@ footer .buttons{
     align-items: center;
     justify-content: space-between;
     box-shadow: 0px 3px 5px 1px rgba(0,0,0,0.1);
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
 .quiz_box header .title{
     font-size: 20px;
@@ -169,11 +165,13 @@ footer .buttons{
 .quiz_box header .timer .time_left_txt{
     font-weight: 400;
     font-size: 17px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
     user-select: none;
 }
 .quiz_box header .timer .timer_sec{
     font-size: 18px;
     font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
     height: 30px;
     width: 45px;
     color: #fff;
@@ -190,6 +188,7 @@ footer .buttons{
     left: 0px;
     height: 3px;
     background: #69B578;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
 section{
     padding: 25px 30px 20px 30px;
@@ -198,10 +197,12 @@ section{
 section .que_text{
     font-size: 25px;
     font-weight: 600;
+   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
 section .ans_opts{
     padding: 20px 0px;
     display: block;   
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
 }
 section .ans_opts .option{
     background: #D0DB97;
@@ -288,9 +289,8 @@ footer .bottom_ques_counter span p:first-child{
     border: none;
     outline: none;
     border-radius: 5px;
-    border: 1px solid #fff;
-    transition: all 0.3s ease;
-}`
+    border: 1px solid ;
+}
 
 footer button:hover{
     background: #69B578;
@@ -314,11 +314,7 @@ footer button.show{
     pointer-events: none;
     transition: all 0.3s ease;
 }
-.end_box .icon{
-    font-size: 100px;
-    color: #007bff;
-    margin-bottom: 10px;
-}
+
 .end_box .complete_text{
     font-size: 20px;
     font-weight: 500;
@@ -357,7 +353,7 @@ footer button.show{
 .buttons button.restart:hover{
     background: #69B578;
 }
-.buttons button.quit{
+.buttons button.continue{
     color: #D0DB97;
     background: #254D32;
 }
